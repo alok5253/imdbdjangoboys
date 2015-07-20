@@ -1,0 +1,5 @@
+=== djangoimdbapp Config Vars
+CLEARDB_DATABASE_URL:                                                                              mysql://b66d463de93ef0:b65afff3@us-cdbr-iron-east-02.cleardb.net/heroku_b804d121133509f?reconnect=true
+DATABASE_URL:                                                                                      mysql://b66d463de93ef0:b65afff3@us-cdbr-iron-east-02.cleardb.net/heroku_b804d121133509f?reconnect=true
+HEROKU_POSTGRESQL_BROWN_URL:                                                                       postgres://owwxyxypiereeh:gQYXk0vioDZS9AFzWaH6p6JpcN@ec2-54-227-247-161.compute-1.amazonaws.com:5432/dofhbc3e4n5r8
+mysql://bbe179b9606cef:5a9b973b@us-cdbr-iron-east-02.cleardb.net/heroku_8645e477fc9a660?reconnect: true

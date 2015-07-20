@@ -1,0 +1,2 @@
+=== testdapp Config Vars
+CLEARDB_DATABASE_URL: mysql://b3ed28d61ba276:8df46600@us-cdbr-iron-east-02.cleardb.net/heroku_36a0cd62e1f2546?reconnect=true

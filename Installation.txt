@@ -1,0 +1,93 @@
+# imdbdjangoapi
+created a django api for Imdb
+
+# Create the project directory
+mkdir tutorial
+cd tutorial
+
+# Create a virtualenv to isolate our package dependencies locally
+virtualenv env
+source env/bin/activate  # On Windows use `env\Scripts\activate`
+
+# Install Django and Django REST framework into the virtualenv
+pip install django
+pip install djangorestframework
+
+# Set up a new project with a single application
+django-admin.py startproject tutorial .  # Note the trailing '.' character
+cd tutorial
+django-admin.py startapp imdb
+cd ..
+
+#Now sync your database for the first time:
+python manage.py migrate
+
+#We'll also create an initial user named admin with a password of password. We'll authenticate as that user later in our example.
+python manage.py createsuperuser
+
+#Then Code views.py, urls.py, settings.py etc. files attached herewith.
+
+#Testing the api locally
+python ./manage.py runserver
+
+#Deploying the django_api on Heroku
+heroku login
+heroku create imdbdjangoapi
+git clone git@heroku.com:imdbdjangoapi.git
+
+#Create a Procfile and write the process name as 
+web: gunicorn project.wsgi
+
+#Create requirements.txt
+pip freeze > requirements.txt
+
+#Configure settings.py as append the below code
+
+##Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+##Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+##Allow all host headers
+ALLOWED_HOSTS = ['*']
+##Static asset configuration
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+#Configure wsgi.py
+from django.core.wsgi import get_wsgi_application
+from dj_static import Cling
+
+application = Cling(get_wsgi_application())
+
+#Git involvement - create .gitignore file
+git init
+git status
+git add .
+git commit -m "commit_message" 
+
+#Deploy to heroku
+git push heroku master
+
+#Heroku back now
+heroku ps:scale web=1
+heroku ps
+heroku open
+heroku logs (optional)
+heroku run python manage.py syncdb (or migrate)
+heroku run python manage.py shell (optional)
+
+#Configure ClearDB in Heroku Django app
+heroku addons:create cleardb
+heroku config (returns CLEARDB_DATABASE_URL= mysql://username:password@cleardb-cdbr-endpoint.cleardb.com/database_name)
+heroku config:add DATABASE_URL=(the_copied_value_of_CLEARDB_DATABASE_URL)
+
+
+
+
+  
